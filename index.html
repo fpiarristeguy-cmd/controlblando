@@ -1,0 +1,2814 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Control Blando — Soluciones Audiovisuales. Planificación, grabación, edición, motion graphics y producción audiovisual."
+    >
+
+    <title>CONTROL BLANDO — Soluciones Audiovisuales</title>
+
+
+    <!-- =========================================================
+         GOOGLE FONTS
+    ========================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Audiowide&family=Michroma&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================================
+         FONT AWESOME
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =========================================================
+         CSS
+    ========================================================== -->
+
+    <style>
+
+        /* =====================================================
+           VARIABLES
+        ====================================================== */
+
+        :root {
+
+            --black: #020001;
+
+            --pink: #f40058;
+
+            --green: #2bdb12;
+
+            --white: #f4f4f4;
+
+            --gray: #999999;
+
+            --font-title: "Audiowide", sans-serif;
+
+            --font-text: "Michroma", sans-serif;
+
+            --max-width: 1400px;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ====================================================== */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+            background: var(--black);
+
+        }
+
+
+        body {
+
+            background: var(--black);
+
+            color: var(--white);
+
+            font-family: var(--font-text);
+
+            overflow-x: hidden;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        button {
+
+            font-family: inherit;
+
+        }
+
+
+        /* =====================================================
+           SCROLLBAR
+        ====================================================== */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background: var(--black);
+
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background: var(--pink);
+
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: var(--green);
+
+        }
+
+
+        /* =====================================================
+           CURSOR GLOW
+        ====================================================== */
+
+        .cursor-glow {
+
+            position: fixed;
+
+            width: 220px;
+
+            height: 220px;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244, 0, 88, 0.10),
+                    transparent 70%
+                );
+
+            transform: translate(-50%, -50%);
+
+            z-index: 0;
+
+            transition:
+                width .3s ease,
+                height .3s ease;
+
+        }
+
+
+        /* =====================================================
+           NOISE
+        ====================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 999;
+
+            opacity: .035;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+
+            mix-blend-mode: screen;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        .navbar {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 80px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 4vw;
+
+            z-index: 100;
+
+            border-bottom:
+                1px solid rgba(244, 0, 88, 0.18);
+
+            background:
+                rgba(2, 0, 1, 0.72);
+
+            backdrop-filter: blur(15px);
+
+            transition:
+                background .3s ease,
+                border-color .3s ease;
+
+        }
+
+
+        .navbar.scrolled {
+
+            background:
+                rgba(2, 0, 1, 0.94);
+
+            border-color:
+                rgba(43, 219, 18, .35);
+
+        }
+
+
+        .nav-logo {
+
+            font-family: var(--font-title);
+
+            font-size: 17px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .nav-logo span {
+
+            color: var(--pink);
+
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 35px;
+
+            list-style: none;
+
+        }
+
+
+        .nav-links a {
+
+            position: relative;
+
+            font-size: 10px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            transition: color .25s ease;
+
+        }
+
+
+        .nav-links a::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: -7px;
+
+            width: 0;
+
+            height: 2px;
+
+            background: var(--green);
+
+            transition: width .3s ease;
+
+        }
+
+
+        .nav-links a:hover {
+
+            color: var(--green);
+
+        }
+
+
+        .nav-links a:hover::after {
+
+            width: 100%;
+
+        }
+
+
+        .menu-button {
+
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--white);
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           GENERAL
+        ====================================================== */
+
+        section {
+
+            position: relative;
+
+            width: 100%;
+
+            padding: 150px 5vw;
+
+        }
+
+
+        .section-inner {
+
+            width: 100%;
+
+            max-width: var(--max-width);
+
+            margin: auto;
+
+        }
+
+
+        .section-label {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 40px;
+
+            color: var(--green);
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .section-label::before {
+
+            content: "";
+
+            width: 40px;
+
+            height: 2px;
+
+            background: var(--pink);
+
+        }
+
+
+        .section-title {
+
+            font-family: var(--font-title);
+
+            font-size: clamp(35px, 6vw, 90px);
+
+            line-height: .95;
+
+            text-transform: uppercase;
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+
+            min-height: 100vh;
+
+            padding-top: 80px;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+        }
+
+
+        .hero-grid {
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: .08;
+
+            background-image:
+                linear-gradient(
+                    rgba(244, 0, 88, .3) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(244, 0, 88, .3) 1px,
+                    transparent 1px
+                );
+
+            background-size: 70px 70px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
+
+        }
+
+
+        .hero-orb {
+
+            position: absolute;
+
+            width: 45vw;
+
+            height: 45vw;
+
+            max-width: 700px;
+
+            max-height: 700px;
+
+            border-radius: 50%;
+
+            right: -15vw;
+
+            top: 5%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244, 0, 88, .18),
+                    transparent 60%
+                );
+
+            filter: blur(5px);
+
+            animation:
+                orbMove 8s ease-in-out infinite alternate;
+
+        }
+
+
+        @keyframes orbMove {
+
+            from {
+
+                transform:
+                    translate(0, 0)
+                    scale(1);
+
+            }
+
+            to {
+
+                transform:
+                    translate(-50px, 40px)
+                    scale(1.1);
+
+            }
+
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+        }
+
+
+        /* =====================================================
+           AFTER EFFECTS VIDEO
+        ====================================================== */
+
+        .hero-animation {
+
+            position: relative;
+
+            width: min(520px, 80vw);
+
+            aspect-ratio: 16 / 9;
+
+            margin-bottom: 35px;
+
+            overflow: hidden;
+
+
+            transform:
+                perspective(900px)
+                rotateX(0deg)
+                rotateY(0deg);
+
+            transition:
+                transform .2s ease;
+
+        }
+
+
+        .hero-animation::before {
+           
+
+            position: absolute;
+
+            top: 12px;
+
+            left: 15px;
+
+            z-index: 3;
+
+            font-size: 7px;
+
+            letter-spacing: 2px;
+
+            color: var(--green);
+
+            opacity: .7;
+
+        }
+
+
+        .hero-animation video {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+           
+
+        }
+
+
+        .hero-title {
+
+            max-width: 1100px;
+
+            font-family: var(--font-title);
+
+            font-size:
+                clamp(
+                    48px,
+                    9vw,
+                    145px
+                );
+
+            line-height: .82;
+
+            letter-spacing: -3px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .hero-title .pink {
+
+            color: var(--pink);
+
+        }
+
+
+        .hero-subtitle {
+
+            max-width: 700px;
+
+            margin-top: 45px;
+
+            font-size:
+                clamp(
+                    12px,
+                    1.2vw,
+                    17px
+                );
+
+            line-height: 2;
+
+            color: #cfcfcf;
+
+        }
+
+
+        .hero-services {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 30px;
+
+        }
+
+
+        .hero-services span {
+
+            padding: 10px 15px;
+
+            border:
+                1px solid
+                rgba(244, 0, 88, .4);
+
+            font-size: 8px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            transition:
+                background .3s ease,
+                color .3s ease,
+                transform .3s ease;
+
+        }
+
+
+        .hero-services span:hover {
+
+            background: var(--pink);
+
+            transform: translateY(-4px);
+
+        }
+
+
+        .hero-cta {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-top: 45px;
+
+            padding: 18px 25px;
+
+            background: var(--pink);
+
+            color: white;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            transition:
+                background .3s ease,
+                transform .3s ease;
+
+        }
+
+
+        .hero-cta:hover {
+
+            background: var(--green);
+
+            color: var(--black);
+
+            transform: translateY(-5px);
+
+        }
+
+
+        .hero-scroll {
+
+            position: absolute;
+
+            bottom: 30px;
+
+            right: 5vw;
+
+            writing-mode: vertical-rl;
+
+            color: var(--gray);
+
+            font-size: 8px;
+
+            letter-spacing: 3px;
+
+            animation:
+                scrollPulse 2s infinite;
+
+        }
+
+
+        @keyframes scrollPulse {
+
+            0%, 100% {
+
+                opacity: .4;
+
+            }
+
+            50% {
+
+                opacity: 1;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SERVICES
+        ====================================================== */
+
+        .services {
+
+            border-top:
+                1px solid
+                rgba(244, 0, 88, .2);
+
+        }
+
+
+        .services-intro {
+
+            max-width: 700px;
+
+            margin-bottom: 80px;
+
+            color: #aaa;
+
+            font-size: 12px;
+
+            line-height: 2;
+
+        }
+
+
+        .services-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.15);
+
+            border-left:
+                1px solid
+                rgba(255,255,255,.15);
+
+        }
+
+
+        .service-card {
+
+            min-height: 300px;
+
+            padding: 35px;
+
+            border-right:
+                1px solid
+                rgba(255,255,255,.15);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.15);
+
+            transition:
+                background .4s ease,
+                transform .4s ease;
+
+        }
+
+
+        .service-card:hover {
+
+            background:
+                rgba(244, 0, 88, .06);
+
+            transform:
+                translateY(-8px);
+
+        }
+
+
+        .service-number {
+
+            font-family: var(--font-title);
+
+            font-size: 12px;
+
+            color: var(--green);
+
+            margin-bottom: 60px;
+
+        }
+
+
+        .service-card h3 {
+
+            font-family: var(--font-title);
+
+            font-size: 18px;
+
+            margin-bottom: 25px;
+
+            line-height: 1.2;
+
+        }
+
+
+        .service-card p {
+
+            color: #888;
+
+            font-size: 9px;
+
+            line-height: 2;
+
+        }
+
+
+        .service-card:hover h3 {
+
+            color: var(--pink);
+
+        }
+
+
+        /* =====================================================
+           PORTFOLIO
+        ====================================================== */
+
+        .portfolio {
+
+            border-top:
+                1px solid
+                rgba(43, 219, 18, .2);
+
+        }
+
+
+        .portfolio-intro {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: end;
+
+            gap: 40px;
+
+            margin-bottom: 80px;
+
+        }
+
+
+        .portfolio-intro p {
+
+            max-width: 430px;
+
+            color: #888;
+
+            font-size: 10px;
+
+            line-height: 2;
+
+        }
+
+
+        .portfolio-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 30px;
+
+        }
+
+
+        .project {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #080608;
+
+            border:
+                1px solid
+                rgba(244, 0, 88, .25);
+
+            transition:
+                transform .5s
+                cubic-bezier(.2,.8,.2,1),
+
+                border-color .3s ease;
+
+        }
+
+
+        .project:hover {
+
+            transform: translateY(-10px);
+
+            border-color: var(--pink);
+
+        }
+
+
+        /*
+         * El primer proyecto ocupa todo el ancho.
+         */
+
+        .project:first-child {
+
+            grid-column: span 2;
+
+        }
+
+
+        .project-video {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+
+                     overflow: hidden;
+
+        }
+
+
+        .project-video iframe {
+
+            width: 100%;
+
+            height: 100%;
+
+            border: none;
+
+            display: block;
+
+        }
+
+
+        .project-info {
+
+            padding: 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+
+        }
+
+
+        .project-category {
+
+            color: var(--green);
+
+            font-size: 7px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .project-title {
+
+            font-family: var(--font-title);
+
+            font-size:
+                clamp(
+                    18px,
+                    2vw,
+                    28px
+                );
+
+            text-transform: uppercase;
+
+        }
+
+
+        .project-arrow {
+
+            width: 45px;
+
+            height: 45px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid
+                var(--pink);
+
+            color: var(--pink);
+
+            transition:
+                background .3s ease,
+                color .3s ease,
+                transform .3s ease;
+
+        }
+
+
+        .project:hover .project-arrow {
+
+            background: var(--pink);
+
+            color: white;
+
+            transform: rotate(45deg);
+
+        }
+
+
+        /* =====================================================
+           CONTACT
+        ====================================================== */
+
+        .contact {
+
+            min-height: 70vh;
+
+            display: flex;
+
+            align-items: center;
+
+            border-top:
+                1px solid
+                rgba(244, 0, 88, .2);
+
+            overflow: hidden;
+
+        }
+
+
+        .contact::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 700px;
+
+            height: 700px;
+
+            border-radius: 50%;
+
+            right: -300px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(43,219,18,.12),
+                    transparent 65%
+                );
+
+            pointer-events: none;
+
+        }
+
+
+        .contact-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .contact-title {
+
+            font-family: var(--font-title);
+
+            font-size:
+                clamp(
+                    55px,
+                    11vw,
+                    170px
+                );
+
+            line-height: .8;
+
+            text-transform: uppercase;
+
+            max-width: 1200px;
+
+        }
+
+
+        .contact-title span {
+
+            color: var(--pink);
+
+        }
+
+
+        .contact-description {
+
+            max-width: 550px;
+
+            margin-top: 50px;
+
+            color: #999;
+
+            font-size: 11px;
+
+            line-height: 2;
+
+        }
+
+
+        .whatsapp-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-top: 40px;
+
+            padding: 20px 30px;
+
+            background: var(--green);
+
+            color: var(--black);
+
+            font-family: var(--font-title);
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+            transition:
+                transform .3s ease,
+                background .3s ease;
+
+        }
+
+
+        .whatsapp-button i {
+
+            font-size: 20px;
+
+        }
+
+
+        .whatsapp-button:hover {
+
+            transform: translateY(-7px);
+
+            background: var(--pink);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            padding: 50px 5vw;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.12);
+
+        }
+
+
+        .footer-inner {
+
+            max-width: var(--max-width);
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+
+        }
+
+
+        .footer-brand {
+
+            font-family: var(--font-title);
+
+            font-size: 15px;
+
+        }
+
+
+        .footer-brand span {
+
+            color: var(--pink);
+
+        }
+
+
+        .footer-description {
+
+            margin-top: 10px;
+
+            color: #666;
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .footer-right {
+
+            color: var(--gray);
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+
+            text-align: right;
+
+        }
+
+
+        /* =====================================================
+           REVEAL
+        ====================================================== */
+
+        .reveal {
+
+            opacity: 0;
+
+            transform:
+                translateY(60px);
+
+            transition:
+                opacity 1s
+                cubic-bezier(.2,.8,.2,1),
+
+                transform 1s
+                cubic-bezier(.2,.8,.2,1);
+
+        }
+
+
+        .reveal.visible {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        .reveal-delay-1 {
+
+            transition-delay: .1s;
+
+        }
+
+
+        .reveal-delay-2 {
+
+            transition-delay: .2s;
+
+        }
+
+
+        .reveal-delay-3 {
+
+            transition-delay: .3s;
+
+        }
+
+
+        /* =====================================================
+           GLITCH
+        ====================================================== */
+
+        .glitch {
+
+            position: relative;
+
+        }
+
+
+        .glitch::before,
+        .glitch::after {
+
+            content: attr(data-text);
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+        }
+
+
+        .glitch::before {
+
+            color: var(--pink);
+
+        }
+
+
+        .glitch::after {
+
+            color: var(--green);
+
+        }
+
+
+        .glitch:hover::before {
+
+            opacity: .7;
+
+            animation:
+                glitchOne .25s
+                steps(2)
+                infinite;
+
+        }
+
+
+        .glitch:hover::after {
+
+            opacity: .7;
+
+            animation:
+                glitchTwo .25s
+                steps(2)
+                infinite;
+
+        }
+
+
+        @keyframes glitchOne {
+
+            0% {
+
+                transform: translate(0);
+
+            }
+
+            50% {
+
+                transform:
+                    translate(5px, -2px);
+
+            }
+
+            100% {
+
+                transform:
+                    translate(-3px, 2px);
+
+            }
+
+        }
+
+
+        @keyframes glitchTwo {
+
+            0% {
+
+                transform: translate(0);
+
+            }
+
+            50% {
+
+                transform:
+                    translate(-5px, 2px);
+
+            }
+
+            100% {
+
+                transform:
+                    translate(3px, -2px);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1000px) {
+
+            .services-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .portfolio-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .project:first-child {
+
+                grid-column: span 1;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                height: 70px;
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .nav-links {
+
+                position: fixed;
+
+                top: 70px;
+
+                left: 0;
+
+                width: 100%;
+
+                display: flex;
+
+                flex-direction: column;
+
+                gap: 0;
+
+                background:
+                    rgba(2,0,1,.97);
+
+                border-bottom:
+                    1px solid
+                    var(--pink);
+
+                transform:
+                    translateY(-120%);
+
+                transition:
+                    transform .4s ease;
+
+            }
+
+
+            .nav-links.active {
+
+                transform:
+                    translateY(0);
+
+            }
+
+
+            .nav-links li {
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,.1);
+
+            }
+
+
+            .nav-links a {
+
+                display: block;
+
+                padding: 22px;
+
+                font-size: 10px;
+
+            }
+
+
+            .menu-button {
+
+                display: block;
+
+            }
+
+
+            section {
+
+                padding:
+                    110px 20px;
+
+            }
+
+
+            .hero {
+
+                padding-top:
+                    100px;
+
+            }
+
+
+            .hero-title {
+
+                font-size:
+                    clamp(
+                        45px,
+                        14vw,
+                        80px
+                    );
+
+                letter-spacing:
+                    -2px;
+
+            }
+
+
+            .hero-animation {
+
+                width: 100%;
+
+            }
+
+
+            .hero-scroll {
+
+                display: none;
+
+            }
+
+
+            .services-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .service-card {
+
+                min-height: auto;
+
+                padding: 30px;
+
+            }
+
+
+            .service-number {
+
+                margin-bottom:
+                    35px;
+
+            }
+
+
+            .portfolio-intro {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .portfolio-grid {
+
+                gap: 20px;
+
+            }
+
+
+            .project-info {
+
+                padding:
+                    22px;
+
+            }
+
+
+            .project-title {
+
+                font-size:
+                    18px;
+
+            }
+
+
+            .contact-title {
+
+                font-size:
+                    clamp(
+                        48px,
+                        16vw,
+                        100px
+                    );
+
+            }
+
+
+            .footer-inner {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .footer-right {
+
+                text-align:
+                    left;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           REDUCIR ANIMACIONES SI EL USUARIO LO PREFIERE
+        ====================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
+
+                scroll-behavior:
+                    auto !important;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         CURSOR GLOW
+    ====================================================== -->
+
+    <div class="cursor-glow"></div>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <a href="#inicio" class="nav-logo">
+
+            CONTROL
+            <span>BLANDO</span>
+
+        </a>
+
+
+        <button
+            class="menu-button"
+            aria-label="Abrir menú"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <nav>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="#inicio">
+                        Inicio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#trabajos">
+                        Trabajos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#contacto">
+                        Contacto
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main id="inicio">
+
+        <section class="hero">
+
+            <div class="hero-grid"></div>
+
+            <div class="hero-orb"></div>
+
+
+            <div class="section-inner">
+
+                <div class="hero-content">
+
+
+                    <!-- =================================================
+                         ANIMACIÓN DE AFTER EFFECTS
+
+                         IMPORTANTE:
+
+                         Para web es preferible MP4 H.264.
+
+                         Archivo esperado:
+
+                         ./logo.mp4
+
+                         Si querés probar el MOV igualmente,
+                         cambiá la extensión en src.
+
+                         RECOMENDADO:
+                         exportar desde After Effects como:
+
+                         logo.mp4
+                         H.264
+                         sin audio
+                         ================================================== -->
+
+                    <div class="hero-animation reveal">
+
+                        <video
+                            src="./logo.mp4"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            preload="auto"
+                        ></video>
+
+                    </div>
+
+
+
+                    <h1
+                        class="hero-title reveal reveal-delay-1 glitch"
+                        data-text="CONTROL BLANDO"
+                    >
+
+                        CONTROL
+
+                        <span class="pink">
+                            BLANDO
+                        </span>
+
+                    </h1>
+
+
+
+                    <p
+                        class="hero-subtitle reveal reveal-delay-2"
+                    >
+
+                        El equipo que materializa tus ideas.
+
+                    </p>
+
+
+
+                    <div
+                        class="hero-services reveal reveal-delay-2"
+                    >
+
+                        <span>
+                            Planificación
+                        </span>
+
+                        <span>
+                            Grabación
+                        </span>
+
+                        <span>
+                            Edición
+                        </span>
+
+                        <span>
+                            Animación
+                        </span>
+
+                           </div>
+
+                    <a
+                        href="#trabajos"
+                        class="hero-cta reveal reveal-delay-3"
+                    >
+
+                        Ver trabajos
+
+                        <i
+                            class="fa-solid fa-arrow-down"
+                        ></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="hero-scroll">
+
+                SCROLL ↓
+
+            </div>
+
+        </section>
+
+        <!-- =====================================================
+             PORTFOLIO
+        ====================================================== -->
+
+        <section
+            id="trabajos"
+            class="portfolio"
+        >
+
+            <div class="section-inner">
+
+
+                <div class="section-label reveal">
+
+                    Selección de trabajos
+
+                </div>
+
+
+
+                <div class="portfolio-intro">
+
+
+                    <h2
+                        class="section-title reveal"
+                    >
+
+                        Portfolio
+
+                    </h2>
+
+
+                </div>
+
+
+
+                <div class="portfolio-grid">
+
+
+
+                    <!-- =================================================
+                         01 — TRACKEADO
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/WHMU4gQsm9g"
+                                title="Trackeado"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    POSTPRODUCCIÓN
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    Trackeado
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- =================================================
+                         02 — FÁBRICA DEL PODCAST
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/43WxWb97dOA"
+                                title="Fábrica del Podcast"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    POSTPRODUCCIÓN
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    Fábrica del Podcast
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- =================================================
+                         03 — 220 PODCAST
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/VxYzxb_gR9Y"
+                                title="220 Podcast"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    REDES SOCIALES
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    220 Podcast
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- =================================================
+                         04 — NEW GAME PLUS
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/VIpi6DrEVu4"
+                                title="New Game Plus"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    REDES SOCIALES
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    New Game Plus
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- =================================================
+                         05 — PHOTO EXPERIENCE / SUPER 55
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/gwQLoPR5rec"
+                                title="Photo Experience — Super 55"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    POSTPRODUCCIÓN
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    Photo Experience
+                                    — Super 55
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- =================================================
+                         06 — QUORUM
+                    ================================================== -->
+
+                    <article
+                        class="project reveal"
+                    >
+
+                        <div class="project-video">
+
+                            <iframe
+                                src="https://www.youtube.com/embed/lasi-DfoFZ8"
+                                title="QUORUM"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+
+                        </div>
+
+
+                        <div class="project-info">
+
+                            <div>
+
+                                <div class="project-category">
+
+                                    POSTPRODUCCIÓN
+
+                                </div>
+
+
+                                <h3 class="project-title">
+
+                                    QUORUM
+
+                                </h3>
+
+                            </div>
+
+
+                            <div class="project-arrow">
+
+                                ↗
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTACTO
+        ====================================================== -->
+
+        <section
+            id="contacto"
+            class="contact"
+        >
+
+            <div class="section-inner">
+
+                <div class="contact-content">
+
+
+                    <div class="section-label reveal">
+
+                        Contacto
+
+                    </div>
+
+
+
+                    <h2
+                        class="contact-title reveal"
+                    >
+
+                        HABLEMOS<span>.</span>
+
+                    </h2>
+
+
+
+                    <p
+                        class="contact-description reveal"
+                    >
+
+                   </p>
+
+
+
+                    <!-- =================================================
+                         WHATSAPP
+
+                         Número:
+                         +54 9 11 5703 3418
+
+                         Mensaje:
+                         "Tengo una idea"
+                    ================================================== -->
+
+                    <a
+                        href="https://wa.me/5491157033418?text=Tengo%20una%20idea"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="whatsapp-button reveal"
+                    >
+
+                        <i
+                            class="fa-brands fa-whatsapp"
+                        ></i>
+
+                        Tengo una idea
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+
+            <div>
+
+                <div class="footer-brand">
+
+                    CONTROL
+                    <span>BLANDO</span>
+
+                </div>
+
+
+                <div class="footer-description">
+
+                    SOLUCIONES AUDIOVISUALES
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-right">
+
+                BUENOS AIRES · ARGENTINA
+
+            </div>
+
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           NAVBAR
+        ====================================================== */
+
+        const navbar =
+            document.querySelector(".navbar");
+
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 50) {
+
+                    navbar.classList.add(
+                        "scrolled"
+                    );
+
+                } else {
+
+                    navbar.classList.remove(
+                        "scrolled"
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           MOBILE MENU
+        ====================================================== */
+
+        const menuButton =
+            document.querySelector(
+                ".menu-button"
+            );
+
+
+        const navLinks =
+            document.querySelector(
+                ".nav-links"
+            );
+
+
+        menuButton.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle(
+                    "active"
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(".nav-links a")
+            .forEach(
+                link => {
+
+                    link.addEventListener(
+                        "click",
+                        () => {
+
+                            navLinks.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================================
+           REVEAL AL HACER SCROLL
+        ====================================================== */
+
+        const revealElements =
+            document.querySelectorAll(
+                ".reveal"
+            );
+
+
+        const revealObserver =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(
+                        entry => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.classList.add(
+                                    "visible"
+                                );
+
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                {
+                    threshold: 0.12
+                }
+
+            );
+
+
+        revealElements.forEach(
+            element => {
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           CURSOR GLOW
+        ====================================================== */
+
+        const cursorGlow =
+            document.querySelector(
+                ".cursor-glow"
+            );
+
+
+        document.addEventListener(
+            "mousemove",
+            event => {
+
+                cursorGlow.style.left =
+                    event.clientX + "px";
+
+                cursorGlow.style.top =
+                    event.clientY + "px";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           EFECTO 3D DEL HERO
+        ====================================================== */
+
+        const heroAnimation =
+            document.querySelector(
+                ".hero-animation"
+            );
+
+
+        if (heroAnimation) {
+
+
+            heroAnimation.addEventListener(
+                "mousemove",
+                event => {
+
+                    const rect =
+                        heroAnimation
+                            .getBoundingClientRect();
+
+
+                    const x =
+                        event.clientX -
+                        rect.left;
+
+
+                    const y =
+                        event.clientY -
+                        rect.top;
+
+
+                    const centerX =
+                        rect.width / 2;
+
+
+                    const centerY =
+                        rect.height / 2;
+
+
+                    const rotateY =
+                        (
+                            (x - centerX) /
+                            centerX
+                        ) * 5;
+
+
+                    const rotateX =
+                        (
+                            (y - centerY) /
+                            centerY
+                        ) * -5;
+
+
+                    heroAnimation.style.transform =
+                        `
+                        perspective(900px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.015)
+                        `;
+
+                }
+            );
+
+
+            heroAnimation.addEventListener(
+                "mouseleave",
+                () => {
+
+                    heroAnimation.style.transform =
+                        `
+                        perspective(900px)
+                        rotateX(0deg)
+                        rotateY(0deg)
+                        scale(1)
+                        `;
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           PARALLAX DEL HERO
+        ====================================================== */
+
+        const heroOrb =
+            document.querySelector(
+                ".hero-orb"
+            );
+
+
+        window.addEventListener(
+            "mousemove",
+            event => {
+
+                const x =
+                    (
+                        event.clientX /
+                        window.innerWidth
+                    ) - .5;
+
+
+                const y =
+                    (
+                        event.clientY /
+                        window.innerHeight
+                    ) - .5;
+
+
+                heroOrb.style.transform =
+                    `
+                    translate(
+                        ${x * -35}px,
+                        ${y * -35}px
+                    )
+                    `;
+
+            }
+        );
+
+
+
+        /* =====================================================
+           GLITCH ALEATORIO
+        ====================================================== */
+
+        const glitchElements =
+            document.querySelectorAll(
+                ".glitch"
+            );
+
+
+        setInterval(
+            () => {
+
+                glitchElements.forEach(
+                    element => {
+
+                        if (
+                            Math.random() > .75
+                        ) {
+
+                            element.style.transform =
+                                `
+                                translate(
+                                    ${Math.random() * 3 - 1.5}px,
+                                    ${Math.random() * 2 - 1}px
+                                )
+                                `;
+
+
+                            setTimeout(
+                                () => {
+
+                                    element.style.transform =
+                                        "translate(0,0)";
+
+                                },
+                                100
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            1800
+        );
+
+
+    </script>
+
+</body>
+
+</html>
